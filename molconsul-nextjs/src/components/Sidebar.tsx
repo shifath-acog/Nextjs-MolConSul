@@ -95,11 +95,11 @@ export default function Sidebar({ onPipelineStart, onPipelineUpdate }: SidebarPr
     <Card className="fixed top-20 left-4 w-[340px] h-[calc(100vh-120px)] p-6 bg-white border border-gray-200 shadow-lg overflow-auto">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label htmlFor="smiles" className="block text-sm font-medium text-gray-700 mb-1">Input SMILES *</label>
+          <label htmlFor="smiles" className="block text-sm font-medium text-gray-700 mb-1">Input SMILES</label>
           <Input id="smiles" {...register("smiles", { required: true })} placeholder="" className="border-gray-300 rounded-md shadow-sm" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Reference Conformer</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Reference Conformer (Optional)</label>
           <div {...getRootProps()} className="border-dashed border-2 border-gray-300 p-3 rounded-md text-center cursor-pointer hover:bg-gray-50 transition">
             <input {...getInputProps()} />
             <p className="text-gray-600">{refConfoFile ? refConfoFile.name : "Drag or click to upload (.sdf, .mol2, .pdb, .xyz)"}</p>
