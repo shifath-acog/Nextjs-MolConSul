@@ -53,3 +53,5 @@ EXPOSE 3000
 
 # Start the Next.js app
 CMD ["npm", "start"]
+
+# docker run -d --gpus all --name molconsul-next-app  molconsul-app
