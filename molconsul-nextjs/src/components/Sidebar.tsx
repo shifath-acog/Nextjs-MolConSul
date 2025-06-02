@@ -100,9 +100,9 @@ export default function Sidebar({ onPipelineStart, onPipelineUpdate }: SidebarPr
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Reference Conformer (Optional)</label>
-          <div {...getRootProps()} className="border-dashed border-2 border-gray-300 p-3 rounded-md text-center cursor-pointer hover:bg-gray-50 transition">
+          <div {...getRootProps()} className="border-dashed border-2 border-gray-300 p-3 rounded-md text-center cursor-pointer hover:bg-gray-50 transition text-ellipsis">
             <input {...getInputProps()} />
-            <p className="text-gray-600">{refConfoFile ? refConfoFile.name : "Drag or click to upload (.sdf, .mol2, .pdb, .xyz)"}</p>
+            <p className="text-gray-600 truncate text-ellipsis">{refConfoFile ? refConfoFile.name : "Drag or click to upload (.sdf, .mol2, .pdb, .xyz)"}</p>
           </div>
         </div>
         <div>
