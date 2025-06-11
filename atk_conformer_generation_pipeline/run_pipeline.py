@@ -442,17 +442,35 @@ def main(
             HA = opti_PCM(mol1, dielectric_value, xyz_filename)
     ###############################
 
-    print(colored("Step 7: Calculating Minimum RMSD between Reference conformer and Cluster Representatives", "cyan"))
-    if ref_confo_path is not None:
-        result = calculate_min_rmsd(ref_confo_path, cluster_reps_sdf)
+    #print(colored("Step 7: Calculating Minimum RMSD between Reference conformer and Cluster Representatives", "cyan"))
+    
+    if geom_opt:
+        xyz_files = sorted(glob.glob(os.path.join(cluster_reps_dir, "*.xyz")))
+        if not xyz_files:
+            print(colored(f"No xyz files found in {cluster_reps_dir}", "yellow"))
+        elif ref_confo_path:       
+            calculate_rmsd_outputs(ref_confo_path, xyz_files) 
+        else:
+            calculate_rmsd_outputs(xyz_files[0], xyz_files[1:],output_sdf="cluster_rep_conformers_vs_gen_conformer.sdf")   
+
+    else:
+        if ref_confo_path is not None:
+            calculate_rmsd_outputs(ref_confo_path, cluster_reps_sdf)
+        else:
+            sdf_files = sorted(glob.glob(os.path.join(cluster_reps_dir, "*.sdf")))
+            calculate_rmsd_outputs(sdf_files[0], sdf_files[1:],output_sdf="cluster_rep_conformers_vs_gen_conformer.sdf") 
+
+        
+
+
 
     end_time = time.time()
     execution_time_seconds = end_time - start_time
     execution_time_minutes = execution_time_seconds // 60
 
     print(f'Number_of_feasible_geometries: {num_feasible_geom}')
-    if ref_confo_path is not None:
-        print(f'Min_RMSD_20_cluster : {result}')
+    # if ref_confo_path is not None:
+    #     print(f'Min_RMSD_20_cluster : {result}')
     print(f'Execution_time : {execution_time_minutes}')
 
     os.chdir("..")

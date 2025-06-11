@@ -470,3 +470,41 @@ def calculate_min_rmsd(
     except ValueError as e:
         print(f"Error occurred while converting RMSD result: {e}")
         return None
+
+
+def calculate_rmsd_outputs(
+    ref_confo_path: str,
+    conformer_files: List[str],
+    output_sdf: str = "cluster_rep_conformers_vs_ref_conformer.sdf",
+) -> Optional[bool]:
+    """
+    Calculate RMSD between the reference conformer and other conformers, generating output files.
+
+    :param ref_confo_path: Path to the reference conformer file
+    :param conformer_files: List of paths to conformer files to compare against reference
+    :param output_sdf: Path to the output SDF file for RMSD calculations
+    :param dat_file: Path to the file where RMSD results are stored
+    :return: True if successful, None if an error occurs
+    """
+    try:
+        # Process each conformer file
+        for conformer_file in conformer_files:
+            # Generate unique output filenames for each comparison
+            base_name = os.path.splitext(os.path.basename(conformer_file))[0]
+            unique_output_sdf = f"{base_name}_{output_sdf}"
+            
+            # Run the RMSD calculation command
+            subprocess.run(
+                f"obrms -f -m {ref_confo_path} {conformer_file} -o {unique_output_sdf}",
+                shell=True,
+                check=True
+            )
+            
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred while running subprocess commands: {e}")
+        return None
+    except Exception as e:
+        print(f"Unexpected error occurred: {e}")
+        return None
